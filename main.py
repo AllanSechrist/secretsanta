@@ -8,13 +8,13 @@ class Student(object):
 
     def __init__(self, name_of_student):
         self.name = name_of_student
-        self.secret_santa = None
+        self.secret_santa = []
 
     def pick_secret_santa(self, list_of_students):
         done = False
         while not done:
             random_student = random.sample(list_of_students, 1)
-            if random_student.name != self.name:
+            if random_student[0].name != self.name:
                 done = True
                 self.secret_santa = random_student
 
@@ -46,11 +46,13 @@ class ClassList(object):
             self.secret_santa_list.append(student)
 
         for student in self.student_list:
-            student.pick_secret_santa()
+            student.pick_secret_santa(self.secret_santa_list)
             remove_from_list(student.secret_santa, self.secret_santa_list)
 
         print(self.student_list)
-
+        # debug
+        for student in self.student_list:
+            print(student.name, "is secret santa for: " + student.secret_santa[0].name)
 
 # manages program
 def main():
